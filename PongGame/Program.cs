@@ -12,22 +12,13 @@ namespace PongGame
     {
         static void Main(string[] args)
         {
-            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "Pong", Styles.Default);
-            window.Closed += Window_Closed;
-            while (window.IsOpen)
+            Game game = new Game(); 
+            while (game.WindowIsOpen())
             {
-                window.DispatchEvents();
-                if (Keyboard.IsKeyPressed(Keyboard.Key.Escape))
-                    window.Close();
-                
-                window.Clear(Color.Black);
-                window.Display();
+                game.HandleInput();
+                game.Update();
+                game.Draw();
             }
-        }
-        static void Window_Closed(object sender, EventArgs e)
-        {
-            RenderWindow window = (RenderWindow) sender;
-            window.Close();
         }
 
     }
