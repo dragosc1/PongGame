@@ -10,13 +10,12 @@ namespace PongGame
 {
     internal class GameWindow
     {
-        private RenderWindow window;
+        private RenderWindow window = new RenderWindow(new VideoMode(800, 600), "Pong", Styles.Default);
         public RenderWindow Window { get { return window; } } 
 
         public GameWindow()
         {
-            window = new RenderWindow(new VideoMode(800, 600), "Pong", Styles.Default);
-            window.Closed += Window_Closed;
+            Window.Closed += Window_Closed;
         }
 
         void Window_Closed(object sender, EventArgs e)
