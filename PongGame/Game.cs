@@ -11,10 +11,12 @@ namespace PongGame
     {
         private int state = 0;
         private GameWindow window;
+        private World world;
 
         public Game()
         {
             window = new GameWindow();
+            world = new World();
         }
 
         public GameWindow Window
@@ -51,6 +53,7 @@ namespace PongGame
         public void Draw()
         {
             window.BeginDraw();
+            world.Draw(ref window);
             window.EndDraw();
         }
     }
