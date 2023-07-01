@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.Window;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +17,18 @@ namespace PongGame
         private StartText text;
         private float timeSpentBall = 0;
         private float timeSpentBar = 0;
-        private float timeStepBall = 1000;
-        private float timeStepBar = 1000;
+        private float timeStepBall = 0.1f;
+        private float timeStepBar = 0.1f;
         private ScoreText score;
         private Font font = new Font("arial.ttf");
-
+        private Clock clock;
         public Game()
         {
             window = new GameWindow();
             world = new World();
             text = new StartText();
             score = new ScoreText();
+            clock = new Clock();
         }
 
         public GameWindow Window
@@ -68,6 +70,7 @@ namespace PongGame
 
         public void Update()
         {
+            float deltaTime = clock.Restart().AsSeconds(); 
             // timer for move ball
             if (timeSpentBall >= timeStepBall)
             {
@@ -86,7 +89,7 @@ namespace PongGame
                 }
                 timeSpentBall = 0;
             }
-            else timeSpentBall += 10.0f;
+            else timeSpentBall += deltaTime;
 
             // timer for move bars
             if (timeSpentBar >= timeStepBar)
@@ -98,7 +101,7 @@ namespace PongGame
                 }
                 timeSpentBar = 0;
             }
-            else timeSpentBar += 20.0f;
+            else timeSpentBar += deltaTime;
         }
 
         public void Draw()
