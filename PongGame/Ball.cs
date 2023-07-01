@@ -6,11 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+enum Direction
+{
+    UpLeft,
+    UpRight,
+    DownRight,
+    DownLeft
+};
+
 namespace PongGame
 {
     internal class Ball
     {
-        Tuple<int, int> BallID;
+        private Tuple<int, int> BallID;
+        private Direction dir;
+
+
         public Ball() {
             BallID = new Tuple<int, int>(25, 17);
         }
@@ -21,6 +32,60 @@ namespace PongGame
             shape.FillColor = Color.Red;
             shape.Size = new Vector2f(World.cellSize, World.cellSize);  
             window.Window.Draw(shape);
+        }
+
+        public int GetWinner()
+        {
+            if (BallID.Item1 < 0)
+                return 2;
+            else if (BallID.Item1 > 49)
+                return 1;
+            return 0;
+        }
+
+        public void SetDirection(int nr)
+        {
+            dir = (Direction) nr;
+        }
+
+        public void Move()
+        {
+            Console.WriteLine(dir);
+            if (dir == Direction.UpLeft)
+            {
+                if (BallID.Item2 == 0) { 
+                    dir = Direction.DownLeft;
+                    Move();
+                }
+                else BallID = new Tuple<int, int>(BallID.Item1 - 1, BallID.Item2 - 1);
+            }
+            else if (dir == Direction.UpRight)
+            {
+                if (BallID.Item2 == 0)
+                {
+                    dir = Direction.DownRight;
+                    Move();
+                }
+                else BallID = new Tuple<int, int>(BallID.Item1 + 1, BallID.Item2 - 1);
+            }
+            else if (dir == Direction.DownLeft)
+            {
+                if (BallID.Item2 == 36)
+                {
+                    dir = Direction.UpLeft;
+                    Move();
+                }
+                else BallID = new Tuple<int, int>(BallID.Item1 - 1, BallID.Item2 + 1);
+            }
+            else
+            {
+                if (BallID.Item2 == 36)
+                {
+                    dir = Direction.UpRight;
+                    Move();
+                }
+                else BallID = new Tuple<int, int>(BallID.Item1 + 1, BallID.Item2 + 1);
+            }
         }
     }
 }

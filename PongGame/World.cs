@@ -22,5 +22,20 @@ namespace PongGame
             obj.Draw(ref window);
             ball.Draw(ref window);
         }
+
+        public int GetWinner()
+        {
+            return ball.GetWinner();
+        }
+
+        public void SetBallDirection(int dir)
+        {
+            ball.SetDirection(dir);
+        }
+
+        public void MoveBall()
+        {
+            ball.Move();
+        }
     }
 }
