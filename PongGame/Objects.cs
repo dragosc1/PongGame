@@ -18,6 +18,16 @@ namespace PongGame
 
         public Objects()
         {
+            Reset();
+            
+        }
+
+        public void Reset()
+        {
+            for (int i = 0; i < bar.Length; i++)
+            {
+                bar[i].Clear();
+            }
             bar[0].Add(new Tuple<int, int>(1, 16));
             bar[0].Add(new Tuple<int, int>(1, 17));
             bar[0].Add(new Tuple<int, int>(1, 18));
@@ -43,6 +53,60 @@ namespace PongGame
                     window.Window.Draw(shape);
                 }
             }
+        }
+
+        private void MoveUp(int id)
+        {
+            if (bar[id].First().Item2 == 0)
+                return;
+            List<Tuple<int, int>> updatedList = new List<Tuple<int, int>>();
+            foreach (Tuple<int, int> x in bar[id])
+            {
+                Tuple<int, int> updatedTuple = new Tuple<int, int>(x.Item1, x.Item2 - 1);
+                updatedList.Add(updatedTuple);
+            }
+
+            bar[id] = updatedList;
+        }
+
+        private void MoveDown(int id)
+        {
+            if (bar[id].First().Item2 == 36)
+                return;
+            List<Tuple<int, int>> updatedList = new List<Tuple<int, int>>();
+            foreach (Tuple<int, int> x in bar[id])
+            {
+                Tuple<int, int> updatedTuple = new Tuple<int, int>(x.Item1, x.Item2 + 1);
+                updatedList.Add(updatedTuple);
+            }
+
+            bar[id] = updatedList;
+        }
+
+        public void MoveBar(int nr, string direction)
+        {
+            if (direction == "Up")
+                MoveUp(nr);
+            else MoveDown(nr);
+        }
+
+        public bool CheckCollision(int id, int x, int y)
+        {
+            if (id == 0)
+            {
+                foreach (Tuple<int, int> tpl in bar[id])
+                {
+                    if (tpl.Item1 + 1 == x && tpl.Item2 == y)
+                        return true;
+                }
+                return false;
+            }
+            foreach (Tuple<int, int> tpl in bar[id])
+            {
+                if (tpl.Item1 - 1 == x && tpl.Item2 == y)
+                    return true;
+            }
+            return false;
         }
     }
 }

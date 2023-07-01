@@ -13,8 +13,10 @@ namespace PongGame
         private GameWindow window;
         private World world;
         private StartText text;
-        private float timeSpent = 0;
-        private float timeStep = 1000;
+        private float timeSpentBall = 0;
+        private float timeSpentBar = 0;
+        private float timeStepBall = 1000;
+        private float timeStepBar = 1000;
 
         public Game()
         {
@@ -62,7 +64,8 @@ namespace PongGame
 
         public void Update()
         {
-            if (timeSpent >= timeStep)
+            // timer for move ball
+            if (timeSpentBall >= timeStepBall)
             {
                 // game is curently running
                 if (state == -1)
@@ -73,11 +76,24 @@ namespace PongGame
                     {
                         // showcase the winner;
                         state = hasWon;
+                        world.Reset();
                     }
                 }
-                timeSpent = 0;
+                timeSpentBall = 0;
             }
-            else timeSpent += 10.0f;
+            else timeSpentBall += 10.0f;
+
+            // timer for move bars
+            if (timeSpentBar >= timeStepBar)
+            {
+                // game is curently running
+                if (state == -1)
+                {
+                    world.HandleBarInput();
+                }
+                timeSpentBar = 0;
+            }
+            else timeSpentBar += 20.0f;
         }
 
         public void Draw()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,28 @@ namespace PongGame
 
         public void MoveBall()
         {
-            ball.Move();
+            ball.Move(ref obj);
+        }
+
+        public void Reset()
+        {
+            ball.Reset();
+            obj.Reset();
+        }
+
+        public void HandleBarInput()
+        {
+            // for bar 1
+            if (Keyboard.IsKeyPressed(Keyboard.Key.W))
+                obj.MoveBar(0, "Up");
+            else if (Keyboard.IsKeyPressed(Keyboard.Key.S))
+                obj.MoveBar(0, "Down");
+
+            // for bar 2
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Up))
+                obj.MoveBar(1, "Up");
+            else if (Keyboard.IsKeyPressed(Keyboard.Key.Down))
+                obj.MoveBar(1, "Down");
         }
     }
 }

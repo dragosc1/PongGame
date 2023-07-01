@@ -21,9 +21,13 @@ namespace PongGame
         private Tuple<int, int> BallID;
         private Direction dir;
 
+        public void Reset()
+        {
+            BallID = new Tuple<int, int>(25, 17);
+        }
 
         public Ball() {
-            BallID = new Tuple<int, int>(25, 17);
+            Reset();
         }
         public void Draw(ref GameWindow window)
         {
@@ -48,14 +52,21 @@ namespace PongGame
             dir = (Direction) nr;
         }
 
-        public void Move()
+        public void Move(ref Objects obj)
         {
             Console.WriteLine(dir);
+
+            // maybe move to switch verification
             if (dir == Direction.UpLeft)
             {
                 if (BallID.Item2 == 0) { 
                     dir = Direction.DownLeft;
-                    Move();
+                    Move(ref obj);
+                }
+                else if (obj.CheckCollision(0, BallID.Item1, BallID.Item2))
+                {
+                    dir = Direction.UpRight;
+                    Move(ref obj);
                 }
                 else BallID = new Tuple<int, int>(BallID.Item1 - 1, BallID.Item2 - 1);
             }
@@ -64,7 +75,12 @@ namespace PongGame
                 if (BallID.Item2 == 0)
                 {
                     dir = Direction.DownRight;
-                    Move();
+                    Move(ref obj);
+                }
+                else if (obj.CheckCollision(1, BallID.Item1, BallID.Item2))
+                {
+                    dir = Direction.UpLeft;
+                    Move(ref obj);
                 }
                 else BallID = new Tuple<int, int>(BallID.Item1 + 1, BallID.Item2 - 1);
             }
@@ -73,7 +89,12 @@ namespace PongGame
                 if (BallID.Item2 == 36)
                 {
                     dir = Direction.UpLeft;
-                    Move();
+                    Move(ref obj);
+                }
+                else if (obj.CheckCollision(0, BallID.Item1, BallID.Item2))
+                {
+                    dir = Direction.DownRight;
+                    Move(ref obj);
                 }
                 else BallID = new Tuple<int, int>(BallID.Item1 - 1, BallID.Item2 + 1);
             }
@@ -82,7 +103,12 @@ namespace PongGame
                 if (BallID.Item2 == 36)
                 {
                     dir = Direction.UpRight;
-                    Move();
+                    Move(ref obj);
+                }
+                else if (obj.CheckCollision(1, BallID.Item1, BallID.Item2))
+                {
+                    dir = Direction.DownLeft;
+                    Move(ref obj);
                 }
                 else BallID = new Tuple<int, int>(BallID.Item1 + 1, BallID.Item2 + 1);
             }
