@@ -71,7 +71,7 @@ namespace PongGame
 
         private void MoveDown(int id)
         {
-            if (bar[id].First().Item2 == 36)
+            if (bar[id].Last().Item2 == 36)
                 return;
             List<Tuple<int, int>> updatedList = new List<Tuple<int, int>>();
             foreach (Tuple<int, int> x in bar[id])

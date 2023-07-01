@@ -31,10 +31,9 @@ namespace PongGame
         }
         public void Draw(ref GameWindow window)
         {
-            RectangleShape shape = new RectangleShape();
+            CircleShape shape = new CircleShape(World.cellSize / 2);
             shape.Position = new Vector2f(BallID.Item1 * World.cellSize, BallID.Item2 * World.cellSize);
             shape.FillColor = Color.Red;
-            shape.Size = new Vector2f(World.cellSize, World.cellSize);  
             window.Window.Draw(shape);
         }
 

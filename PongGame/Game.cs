@@ -1,4 +1,5 @@
-﻿using SFML.Window;
+﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,15 @@ namespace PongGame
         private float timeSpentBar = 0;
         private float timeStepBall = 1000;
         private float timeStepBar = 1000;
+        private ScoreText score;
+        private Font font = new Font("arial.ttf");
 
         public Game()
         {
             window = new GameWindow();
             world = new World();
             text = new StartText();
+            score = new ScoreText();
         }
 
         public GameWindow Window
@@ -76,6 +80,7 @@ namespace PongGame
                     {
                         // showcase the winner;
                         state = hasWon;
+                        score.Increase(hasWon - 1);
                         world.Reset();
                     }
                 }
@@ -101,7 +106,8 @@ namespace PongGame
             window.BeginDraw();
             world.Draw(ref window);
             if (state != -1)
-                text.Draw(ref window);
+                text.Draw(ref window, ref font);
+            score.Draw(ref window, ref font);
             window.EndDraw();
         }
     }

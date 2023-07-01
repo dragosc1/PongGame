@@ -15,9 +15,8 @@ namespace PongGame
         {
             
         }
-        public void Draw(ref GameWindow window)
+        public void Draw(ref GameWindow window, ref Font font)
         {
-            Font font = new Font("arial.ttf");
 
             Text text = new Text();
             text.DisplayedString = start;
